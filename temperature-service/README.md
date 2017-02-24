@@ -42,7 +42,7 @@ You can run this service as a docker container by using the [`s2i` tool](https:/
 
 ```sh
 $ s2i build . bucharestgold/centos7-s2i-nodejs temperature-service
-$ docker run -it -p 8080:8080 temperature-service
+$ docker run -it -p 8080:8080 -eOPENWEATHER_API_KEY=<your api key> temperature-service
 ```
 
 ### openshift container platform

@@ -15,7 +15,7 @@ const serviceUrl = 'http://api.openweathermap.org/data/2.5/weather';
 // or something more complex like seneca.js
 const server = new Hapi.Server();
 server.connection({
-  host: 'localhost',
+  host: '0.0.0.0',
   port: 8080
 });
 
