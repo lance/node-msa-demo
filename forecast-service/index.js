@@ -29,6 +29,15 @@ server.route({
       .catch(reply)
 });
 
+// This will enable /status and show information about
+// CPU and memory usage.
+server.register({
+  register: require('hapijs-status-monitor')
+});
+
+// This will print all the paths to stdout when the App starts.
+server.register({ register: require('blipp')});
+
 // Fetches current condition weather data
 // from openweathermap.org.
 // The `q` parameter can be a zip code
