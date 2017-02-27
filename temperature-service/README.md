@@ -47,6 +47,13 @@ $ docker run -it -p 8080:8080 -eOPENWEATHER_API_KEY=<your api key> temperature-s
 
 ### openshift container platform
 
-This application works with the newest, and as yet unreleased version of openshift container platform. To run it in this environment, you can use the openshift command line tool, [`oc`](https://github.com/openshift/origin/releases/) to set up a cluster, or use the [Developer CDK](https://developers.redhat.com/products/cdk/overview/).
+This application works with the latest version of openshift container platform. To run it in this environment, you can use the openshift command line tool, [`oc`](https://github.com/openshift/origin/releases/) to set up a cluster, or use the [Developer CDK](https://developers.redhat.com/products/cdk/overview/).
 
-TODO: Write up the lengthy means by which this can be done.
+Setting up this environment is beyond the scope of this README. However, the simplest method is to just run `oc cluster up`.
+
+So, assuming you have the latest OpenShift Container Platform running, you can run the app from the parent directory, `node-msa-demo` by issuing the following command.
+
+```sh
+$ oc new-app OPENWEATHER_API_KEY=<your api key> --name=temperature-service --context-dir=temperature-service bucharestgold/centos7-s2i-nodejs:7.6.0~.
+$ oc expose svc/temperature-service
+```
