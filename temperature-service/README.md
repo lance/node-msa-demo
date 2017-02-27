@@ -54,6 +54,6 @@ Setting up this environment is beyond the scope of this README. However, the sim
 So, assuming you have the latest OpenShift Container Platform running, you can run the app from the parent directory, `node-msa-demo` by issuing the following command.
 
 ```sh
-$ oc new-app OPENWEATHER_API_KEY=<your api key> --name=temperature-service --context-dir=temperature-service bucharestgold/centos7-s2i-nodejs:7.6.0~.
+$ oc new-app bucharestgold/centos7-s2i-nodejs:7.6.0~. OPENWEATHER_API_KEY=<your api key> --name=temperature-service --context-dir=temperature-service
 $ oc expose svc/temperature-service
 ```

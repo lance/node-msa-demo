@@ -4,6 +4,7 @@
   "author": "Red Hat, Inc.",
   "license": "Apache-2.0",
   "scripts": {
+    "start": "node index.js",
     "test": "tape test/*.js | tap-spec",
     "lint": "eslint test/*.js index.js",
     "prepublish": "nsp check",
