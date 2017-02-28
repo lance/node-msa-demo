@@ -52,7 +52,7 @@ const fetchConditions = (q) =>
 const roiOptions = (q) => ({
     endpoint: `${serviceUrl}?${querystring.stringify({
     q: q, appid: apiKey, units: 'imperial'
-  })}`})
+  })}`});
 
 // Start the server
 server.start((err) => {
