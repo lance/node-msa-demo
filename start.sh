@@ -2,43 +2,42 @@
 
 : ${OPENWEATHER_API_KEY:?"No OPENWEATHER_API_KEY environment variable set."}
 
-function waitForOc {
-  sleep 20
-  oc logs -f $1 > oc.log 2>&1 &
-  C=50
-  while [ $C -gt 0 ]
-  do
-    grep "Push successful" oc.log
-    if [ $? -eq 0 ]; then
-      echo "${1} deployed."
-      echo "" > oc.log
-      C=0
-    else
-      echo -n "."
-      C=$(( $C - 1 ))
-    fi
-    sleep 1
-  done
-}
-
 oc cluster up
 oc login -u developer -p developer
 
 oc new-project node-msa-demo
 
-echo "Starting forecast-service"
-oc new-app bucharestgold/centos7-s2i-nodejs:latest~. OPENWEATHER_API_KEY=$OPENWEATHER_API_KEY --name=forecast-service --context-dir=forecast-service
-# waitForOc "forecast-service"
-oc expose svc/forecast-service
+echo "Creating forecast service build"
+oc new-build --binary --name=forecast -l app=forecast
 
-echo "Starting conditions-service"
-oc new-app bucharestgold/centos7-s2i-nodejs:latest~. OPENWEATHER_API_KEY=$OPENWEATHER_API_KEY --name=conditions-service --context-dir=conditions-service
-# waitForOc "conditions-service"
-oc expose svc/conditions-service
+echo "Building forecast service"
+cd forecast-service && npm install && cd ..
+oc start-build forecast --from-dir=./forecast-service --follow
+
+echo "Starting forecast service"
+oc new-app forecast OPENWEATHER_API_KEY=$OPENWEATHER_API_KEY -l app=forecast
+oc expose svc/forecast
+
+echo "Creating conditions service build"
+oc new-build --binary --name=conditions -l app=conditions
+
+echo "Building conditions service"
+cd conditions-service && npm install && cd ..
+oc start-build conditions --from-dir=./conditions-service --follow
+
+echo "Starting conditions service"
+oc new-app conditions OPENWEATHER_API_KEY=$OPENWEATHER_API_KEY -l app=conditions
+oc expose svc/conditions
+
+echo "Creating frontend build"
+oc new-build --binary --name=frontend -l app=frontend
+
+echo "Building frontend"
+cd frontend && npm install && cd ..
+oc start-build frontend --from-dir=./frontend --follow
 
 echo "Starting frontend"
-oc new-app bucharestgold/centos7-s2i-nodejs:latest~. OPENWEATHER_API_KEY=$OPENWEATHER_API_KEY --name=frontend --context-dir=frontend
-# waitForOc "frontend"
+oc new-app node-msa-demo/frontend -l app=frontend
 oc expose svc/frontend
 
 oc get routes | awk '{print $2}' | grep xip.io
