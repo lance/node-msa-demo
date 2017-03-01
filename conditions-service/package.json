@@ -1,5 +1,5 @@
 {
-  "name": "temperature-service",
+  "name": "conditions-service",
   "version": "0.0.1",
   "author": "Red Hat, Inc.",
   "license": "Apache-2.0",
@@ -13,20 +13,12 @@
     "dependencyCheck": "szero . --ci",
     "release": "standard-version"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/lance/temperature-service.git"
-  },
   "files": [
     "package.json",
     "README.md",
     "LICENSE",
     "index.js"
   ],
-  "bugs": {
-    "url": "https://github.com/lance/temperature-service/issues"
-  },
-  "homepage": "https://github.com/lance/temperature-service",
   "devDependencies": {
     "eslint": "~3.8.1",
     "eslint-config-semistandard": "~7.0.0",
@@ -41,8 +33,7 @@
     "szero": "^0.7.1",
     "standard-version": "^3.0.0"
   },
-  "gitHubUser": "lance",
-  "description": "Simple service to provide current temperature via JSON REST API",
+  "description": "Simple service to provide current weather conditions via JSON REST API",
   "keywords": [
     "temperature",
     "weather",

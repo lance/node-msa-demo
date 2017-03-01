@@ -10,15 +10,16 @@ server.connection({
   port: 8080
 });
 
-const tempSvc = process.env.TEMPERATURE_SERVICE || 'http://temperature-service:8080/conditions';
-const forecastSvc = process.env.TEMPERATURE_SERVICE || 'http://forecast-service:8080/forecast';
+const conditionsSvc = process.env.TEMPERATURE_SERVICE || 'http://conditions:8080/conditions';
+const forecastSvc = process.env.TEMPERATURE_SERVICE || 'http://forecast:8080/forecast';
 
 // Add the route
 server.route({
   method: 'GET',
   path: '/weather/{q}',
   handler: (request, reply) => {
-    roi.get({ endpoint: `${tempSvc}/${request.params.q}?` })
+    console.log()
+    roi.get({ endpoint: `${conditionsSvc}/${request.params.q}` })
       .then((resp) => reply(resp.body).type('application/json'))
       .catch(reply);
   }

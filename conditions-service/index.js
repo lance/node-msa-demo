@@ -22,7 +22,7 @@ server.connection({
 // Add the route
 server.route({
   method: 'GET',
-  path: '/weather/{q}',
+  path: '/conditions/{q}',
   handler: (request, reply) =>
     fetchConditions(request.params.q)
       .then((response) => reply(response).type('application/json'))

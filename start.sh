@@ -40,4 +40,6 @@ echo "Starting frontend"
 oc new-app node-msa-demo/frontend -l app=frontend
 oc expose svc/frontend
 
-oc get routes | awk '{print $2}' | grep xip.io
+oc get routes
+
+open https://127.0.0.1:8443/console
